@@ -16,7 +16,7 @@ import {
 const wallets = [
   new BloctoWalletAdapter({
     network: WalletAdapterNetwork.Testnet,
-    bloctoAppId: '123'
+    bloctoAppId: 'c9aae963-60fc-4066-b8f9-21eda88d384a'
   }),
 ];
 
@@ -111,13 +111,13 @@ const Main = () => {
         }
         const dig = {
           arguments: [],
-          function: '0xb8ab31b4afab9827989f8eefcd8efc89de868af4ca386b70e79acdf7ced7b3ef::graveyard::dig',
+          function: '0xedee10d387fcc2f10d54d12dd69ce973dd8b4f0e7a59f0fbb57db64500d7ce5c::graveyard::dig',
           type: 'entry_function_payload',
           type_arguments: [],
         };
 
         try {
-          const result = await signAndSubmitTransaction(dig, txOptions);
+          const result = await signAndSubmitTransaction(dig);
           if (result) {
             console.log(result)
           }
@@ -142,13 +142,13 @@ const Main = () => {
         }
         const claim = {
           arguments: [],
-          function: '0xb8ab31b4afab9827989f8eefcd8efc89de868af4ca386b70e79acdf7ced7b3ef::shovel::claim_mint',
+          function: '0xedee10d387fcc2f10d54d12dd69ce973dd8b4f0e7a59f0fbb57db64500d7ce5c::shovel::claim_mint',
           type: 'entry_function_payload',
           type_arguments: [],
         };
 
         try {
-          const result = await signAndSubmitTransaction(claim, txOptions);
+          const result = await signAndSubmitTransaction(claim);
           if (result) {
             console.log(result)
           }
