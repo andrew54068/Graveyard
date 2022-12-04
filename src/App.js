@@ -12,6 +12,10 @@ import {
   useWallet,
   WalletAdapterNetwork
 } from '@manahippo/aptos-wallet-adapter';
+import PageTitle from './component/PageTitle';
+import Lobby from './component/Lobby'
+import Bridge from './component/Bridge'
+import SuiResult from './component/SuiResult'
 
 const wallets = [
   new BloctoWalletAdapter({
@@ -172,8 +176,14 @@ const Main = () => {
   }
 
   return (
-    <div style={myStyle} className="App">
-      <button
+
+    <div className="App">
+      <PageTitle title="TestTitle......" info="TextTextTextTextTextTextTextTextTextText" />
+      <Lobby />
+      <PageTitle title="TestTitle......" info="TextTextTextTextTextTextTextTextTextText" />
+      <Bridge />
+      <SuiResult />
+      {/* <button
         style={connetWalletButtonStyle}
         onClick={() => !connected ? connect(BloctoWalletName) : disconnect()}
       >
@@ -205,7 +215,7 @@ const Main = () => {
             {error?.message}
           </Alert>
         </Snackbar>
-      </div>
+      </div> */}
     </div>
   )
 }
