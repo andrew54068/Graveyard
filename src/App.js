@@ -1,103 +1,132 @@
-import React, { useEffect, useState } from 'react';
-import { Snackbar } from '@material-ui/core'
-import { Alert } from '@material-ui/lab'
-import tomb from './tomb.png';
-import tombs from './tombs.png';
-import './App.css';
-import Button from 'react-bootstrap/Button';
+import React, { useEffect, useState } from "react";
+import { Snackbar } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
+import tomb from "./tomb.png";
+import tombs from "./tombs.png";
+import "./App.css";
+import Button from "react-bootstrap/Button";
 import {
   WalletProvider,
   BloctoWalletAdapter,
   BloctoWalletName,
   useWallet,
-  WalletAdapterNetwork
-} from '@manahippo/aptos-wallet-adapter';
+  WalletAdapterNetwork,
+} from "@manahippo/aptos-wallet-adapter";
+
+import {
+  WalletProvider as SuiWalletProvider,
+  useWallet as suiUseWallet,
+} from "@mysten/wallet-adapter-react";
+import { WalletStandardAdapterProvider } from "@mysten/wallet-adapter-all-wallets";
 
 const wallets = [
   new BloctoWalletAdapter({
     network: WalletAdapterNetwork.Testnet,
-    bloctoAppId: 'c9aae963-60fc-4066-b8f9-21eda88d384a'
+    bloctoAppId: "c9aae963-60fc-4066-b8f9-21eda88d384a",
   }),
 ];
 
 const myStyle = {
   backgroundImage: `url(${process.env.PUBLIC_URL + "/dark-night.png"})`,
-  width: '100%',
-  height: '100vh',
-  bottom: '-50px',
-  right: '-200px',
-  fontSize: '50px',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat',
+  width: "100%",
+  height: "100vh",
+  bottom: "-50px",
+  right: "-200px",
+  fontSize: "50px",
+  backgroundSize: "cover",
+  backgroundRepeat: "no-repeat",
 };
 
 const tombStyle = {
-  width: '275px',
-  height: '220px',
-  position: 'absolute',
-  left: '5%',
-  bottom: '20%',
+  width: "275px",
+  height: "220px",
+  position: "absolute",
+  left: "5%",
+  bottom: "20%",
   // backgroundSize: 'cover',
-  filter: 'brightness(55%)',
-}
+  filter: "brightness(55%)",
+};
 
 const tombsStyle = {
-  width: '435px',
-  height: '300px',
-  position: 'absolute',
-  left: '1%',
-  bottom: '28%',
+  width: "435px",
+  height: "300px",
+  position: "absolute",
+  left: "1%",
+  bottom: "28%",
   // backgroundSize: 'cover',
-  filter: 'brightness(70%)',
-}
+  filter: "brightness(70%)",
+};
 
 const connetWalletButtonStyle = {
-  width: '150px',
-  height: '40px',
-  position: 'absolute',
-  right: '3%',
-  top: '3%',
-  filter: 'brightness(90%)',
-  borderRadius: '10px'
-}
+  width: "150px",
+  height: "40px",
+  position: "absolute",
+  right: "3%",
+  top: "3%",
+  filter: "brightness(90%)",
+  borderRadius: "10px",
+};
+
+const suiConnetWalletButtonStyle = {
+  width: "150px",
+  height: "40px",
+  position: "absolute",
+  left: "3%",
+  top: "3%",
+  filter: "brightness(90%)",
+  borderRadius: "10px",
+};
 
 const digButtonStyle = {
-  width: '100px',
-  height: '30px',
-  position: 'absolute',
-  left: '10%',
-  bottom: '18%',
-  filter: 'brightness(87%)',
-  borderRadius: '10px'
-}
+  width: "100px",
+  height: "30px",
+  position: "absolute",
+  left: "10%",
+  bottom: "18%",
+  filter: "brightness(87%)",
+  borderRadius: "10px",
+};
 
 const claimButtonStyle = {
-  width: '120px',
-  height: '30px',
+  width: "120px",
+  height: "30px",
   // position: 'absolute',
   // left: '10%',
-  bottom: '50%',
+  bottom: "50%",
   // top: '50%',
-  filter: 'brightness(87%)',
-  borderRadius: '10px'
-}
+  filter: "brightness(87%)",
+  borderRadius: "10px",
+};
 
 function App() {
+  const adapters = [
+    {adapter: new WalletStandardAdapterProvider()},
+  ];
   return (
     <WalletProvider
       wallets={wallets}
       onError={(error) => {
-        console.log('Handle Error Message', error)
+        console.log("Handle Error Message", error);
       }}
     >
-      <Main />
+      <SuiWalletProvider adapters={adapters}>
+        <Main />
+      </SuiWalletProvider>
     </WalletProvider>
   );
 }
 
-const Main = () => {
+const aptosAddress =
+  "0x946280a55720fd8665d927ee7c25b8eeeb323870619fcffb29c8115f1aedfe24";
 
-  const { connect, disconnect, connected, signAndSubmitTransaction } = useWallet();
+const Main = () => {
+  const { connect, disconnect, connected, signAndSubmitTransaction } =
+    useWallet();
+  const {
+    connect: suiConnect,
+    connected: suiConnected,
+    // getAccounts,
+  } = suiUseWallet();
   const [isClaiming, setClaiming] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -106,20 +135,20 @@ const Main = () => {
     if (isLoading) {
       const sendTransaction = async () => {
         const txOptions = {
-          max_gas_amount: '20000',
-          gas_unit_price: '200'
-        }
+          max_gas_amount: "20000",
+          gas_unit_price: "200",
+        };
         const dig = {
           arguments: [],
-          function: '0xedee10d387fcc2f10d54d12dd69ce973dd8b4f0e7a59f0fbb57db64500d7ce5c::graveyard::dig',
-          type: 'entry_function_payload',
+          function: aptosAddress + "::graveyard::dig",
+          type: "entry_function_payload",
           type_arguments: [],
         };
 
         try {
-          const result = await signAndSubmitTransaction(dig);
+          const result = await signAndSubmitTransaction(dig, txOptions);
           if (result) {
-            console.log(result)
+            console.log(result);
           }
         } catch (error) {
           setError(error);
@@ -137,20 +166,20 @@ const Main = () => {
     if (isClaiming) {
       const sendTransaction = async () => {
         const txOptions = {
-          max_gas_amount: '20000',
-          gas_unit_price: '200'
-        }
+          max_gas_amount: "20000",
+          gas_unit_price: "200",
+        };
         const claim = {
           arguments: [],
-          function: '0xedee10d387fcc2f10d54d12dd69ce973dd8b4f0e7a59f0fbb57db64500d7ce5c::shovel::claim_mint',
-          type: 'entry_function_payload',
+          function: aptosAddress + "::shovel::claim_mint",
+          type: "entry_function_payload",
           type_arguments: [],
         };
 
         try {
-          const result = await signAndSubmitTransaction(claim);
+          const result = await signAndSubmitTransaction(claim, txOptions);
           if (result) {
-            console.log(result)
+            console.log(result);
           }
         } catch (error) {
           setError(error);
@@ -165,19 +194,25 @@ const Main = () => {
   const handleClaim = () => setClaiming(true);
 
   const handleErrorClose = (_, reason) => {
-    if (reason && reason === 'clickaway') {
-      return
+    if (reason && reason === "clickaway") {
+      return;
     }
-    setError(undefined)
-  }
+    setError(undefined);
+  };
 
   return (
     <div style={myStyle} className="App">
       <button
         style={connetWalletButtonStyle}
-        onClick={() => !connected ? connect(BloctoWalletName) : disconnect()}
+        onClick={() => (!connected ? connect(BloctoWalletName) : disconnect())}
       >
         {!connected ? "Connect to Blocto" : "Disconnect"}
+      </button>
+      <button
+        style={suiConnetWalletButtonStyle}
+        onClick={() => (!suiConnected ? suiConnect() : disconnect())}
+      >
+        {!connected ? "Connect sui" : "Disconnect"}
       </button>
       <div>
         <img src={tombs} className="Tombs" alt="logo" style={tombsStyle} />
@@ -189,7 +224,7 @@ const Main = () => {
           size="sm"
           style={digButtonStyle}
         >
-          {isLoading ? 'Loading…' : 'Click to dig'}
+          {isLoading ? "Loading…" : "Click to dig"}
         </Button>
         <Button
           variant="primary"
@@ -198,16 +233,20 @@ const Main = () => {
           size="lg"
           style={claimButtonStyle}
         >
-          {isClaiming ? 'Claiming…' : 'claim a shovel'}
+          {isClaiming ? "Claiming…" : "claim a shovel"}
         </Button>
-        <Snackbar open={error !== undefined} autoHideDuration={3000} onClose={handleErrorClose}>
-          <Alert onClose={handleErrorClose} severity='error'>
+        <Snackbar
+          open={error !== undefined}
+          autoHideDuration={3000}
+          onClose={handleErrorClose}
+        >
+          <Alert onClose={handleErrorClose} severity="error">
             {error?.message}
           </Alert>
         </Snackbar>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default App;
