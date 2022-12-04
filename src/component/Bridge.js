@@ -9,7 +9,7 @@ const Bridge = () => {
             bgImage={BridgeBg}
             w="100%"
             bgRepeat="no-repeat"
-            bgSize="cover"
+            bgSize="100%"
             minH={{ base: '1085px' }}
             position="relative"
         >
