@@ -178,9 +178,9 @@ const Main = () => {
   return (
 
     <div className="App">
-      <PageTitle title="TestTitle......" info="TextTextTextTextTextTextTextTextTextText" />
+      <PageTitle title="Grandma......" info="where are you?" />
       <Lobby />
-      <PageTitle title="TestTitle......" info="TextTextTextTextTextTextTextTextTextText" />
+      <PageTitle title="No problem!" info="let me reborn you." />
       <Bridge />
       <SuiResult />
       {/* <button
