@@ -34,10 +34,10 @@ const Bridge = () => {
                     fontWeight={600} w="100%"
                     color="#fff"
                 >
-                    Titltltltltlt
+                    Reincarnation
                 </Text>
                 <Button>
-                    Button
+                    Reborn
                 </Button>
             </Box>
         </Box >
