@@ -25,8 +25,8 @@ const SuiResult = ({ title, info }) => {
                     <Image src={SuiNFTImg} />
                 </Box>
                 <Box>
-                    <Text fontSize={{ base: '60px' }} fontWeight={600} w="100%" color="#fff">Title...</Text>
-                    <Text fontSize={{ base: '20px' }} fontWeight={600} color="#fff">content....</Text>
+                    <Text fontSize={{ base: '60px' }} fontWeight={600} w="100%" color="#fff">Grandma</Text>
+                    <Text fontSize={{ base: '20px' }} fontWeight={600} color="#fff">you are alive!!</Text>
                 </Box>
             </Flex>
         </Box >
