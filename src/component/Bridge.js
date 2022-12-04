@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Flex, Button, Image, Text } from '@chakra-ui/react'
+import { Box, Flex, Button, Text } from '@chakra-ui/react'
 import BridgeBg from '../assets/images/bridge-bg.jpg'
 
 

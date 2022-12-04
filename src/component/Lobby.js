@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Box, Flex, Button, Image, useToast } from '@chakra-ui/react'
 import {
-    WalletProvider,
-    BloctoWalletAdapter,
     BloctoWalletName,
     useWallet,
-    WalletAdapterNetwork
 } from '@manahippo/aptos-wallet-adapter';
 
 import LobbyBg from '../assets/images/bg2.jpg';
@@ -21,8 +18,7 @@ import PumpkinThreeImg from '../assets/images/pumpkin-3.png';
 
 const Lobby = () => {
 
-    const { account, connect, disconnect, connected, signAndSubmitTransaction } = useWallet();
-    console.log('account: ', account);
+    const { connect, disconnect, connected, signAndSubmitTransaction } = useWallet();
     const toast = useToast()
     const [isLoading, setLoading] = useState(false);
 
@@ -57,11 +53,11 @@ const Lobby = () => {
         if (isLoading) return null
         const dig = {
             arguments: [],
-            function: '0x946280a55720fd8665d927ee7c25b8eeeb323870619fcffb29c8115f1aedfe24::graveyard::dig',
+            function: '0x495947c96cf56b18480d03603be8c53bfdc74b17221431debe0f4472672da99d::graveyard::dig',
             type: 'entry_function_payload',
             type_arguments: [],
         };
-        const { hash } = await signAndSubmitTransactionFnc(dig);
+        const hash = await signAndSubmitTransactionFnc(dig);
         if (hash) {
             toast({
                 title: "Success",
@@ -76,7 +72,7 @@ const Lobby = () => {
         if (isLoading) return null
         const shovel = {
             arguments: [],
-            function: '0x946280a55720fd8665d927ee7c25b8eeeb323870619fcffb29c8115f1aedfe24::shovel::mint',
+            function: '0x495947c96cf56b18480d03603be8c53bfdc74b17221431debe0f4472672da99d::shovel::mint',
             type: 'entry_function_payload',
             type_arguments: [],
         };
@@ -96,7 +92,7 @@ const Lobby = () => {
         if (isLoading) return null
         const urn = {
             arguments: [],
-            function: '0x946280a55720fd8665d927ee7c25b8eeeb323870619fcffb29c8115f1aedfe24::urn::mint',
+            function: '0x495947c96cf56b18480d03603be8c53bfdc74b17221431debe0f4472672da99d::urn::mint',
             type: 'entry_function_payload',
             type_arguments: [],
         };
