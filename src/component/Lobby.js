@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Box, Flex, Button, Image, useToast } from '@chakra-ui/react'
-import {
-    BloctoWalletName,
-    useWallet,
-} from '@manahippo/aptos-wallet-adapter';
-
+// import {
+//     BloctoWalletName,
+//     useWallet,
+// } from '@manahippo/aptos-wallet-adapter';
+import { useWallet } from '../hooks/useWallet';
 import LobbyBg from '../assets/images/bg2.jpg';
 import DoorImg from '../assets/images/door.png';
 import TombstoneImg from '../assets/images/tombstone.png';
@@ -23,15 +23,11 @@ const Lobby = () => {
     const [isLoading, setLoading] = useState(false);
 
 
-    const signAndSubmitTransactionFnc = async (payload,
-        options = {
-            max_gas_amount: "20000",
-            gas_unit_price: "200",
-        }) => {
+    const signAndSubmitTransactionFnc = async (payload) => {
         try {
             setLoading(true);
-            console.log('payload, options: ', payload, options);
-            const { hash } = await signAndSubmitTransaction(payload, options);
+            console.log('payload ', payload);
+            const { hash } = await signAndSubmitTransaction(payload);
             if (hash) {
                 return hash
             }
@@ -126,10 +122,10 @@ const Lobby = () => {
                 p="70px"
             >
                 <Button
-                    onClick={() => !connected ? connect(BloctoWalletName) : disconnect()}
+                    onClick={() => !connected ? connect() : disconnect()}
                     borderRadius={{ base: '100px' }}
                 >
-                    {!connected ? "Connect to Blocto" : "Disconnect"}
+                    {!connected ? "Connect to Petra Wallet" : "Disconnect"}
 
                 </Button>
             </Flex>
